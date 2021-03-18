@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
+using  UnityEditor;
 
 namespace CustomRP.Runtime
 {
     //未来支持不同相机 不同渲染方法
-    public class CameraRenderer
+    public partial class CameraRenderer
     {
         private ScriptableRenderContext _context;
 
@@ -17,6 +18,7 @@ namespace CustomRP.Runtime
         private CullingResults _cullingResults;
         
         static  ShaderTagId unlitShaderTagId= new  ShaderTagId("SRPDefaultUnlit");
+        
         
         public void Render(ScriptableRenderContext context, Camera camera)
         {
@@ -33,8 +35,10 @@ namespace CustomRP.Runtime
 
             //绘制天空
             DrawVisibleGeometry();
-            
             //其他得绘制  必须单独通过commandbuffer 间接执行
+
+            DrawUnsupportedShaders();
+            DrawGizmos();
             
             
             //提交
@@ -73,8 +77,17 @@ namespace CustomRP.Runtime
             
             _context.DrawRenderers(_cullingResults,ref drawingSettings,ref filteringSettings);
             
+            
+           // _context.DrawGizmos(_camera,)
+            
         }
 
+
+
+        partial void DrawUnsupportedShaders();
+
+        partial void DrawGizmos();
+        
 
         void Submit()
         {
