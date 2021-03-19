@@ -10,6 +10,7 @@ namespace CustomRP.Runtime
     
         protected override RenderPipeline CreatePipeline()
         {
+            
             return new CustomRenderPipeline(useDynamicBatching,useGPUInstancing,useSRPBatcher);
         }
         
