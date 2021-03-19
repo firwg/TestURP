@@ -1,15 +1,17 @@
-using CustomRP.Runtime;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-
-[CreateAssetMenu(menuName = "Rendering/ CustomRenderPipeline")]
-public class CustomRenderPipelineAsset : RenderPipelineAsset
+namespace CustomRP.Runtime
 {
-    protected override RenderPipeline CreatePipeline()
+    [CreateAssetMenu(menuName = "Rendering/ CustomRenderPipeline")]
+    public class CustomRenderPipelineAsset : RenderPipelineAsset
     {
-        return new CustomRenderPipeline();
+        [SerializeField] private bool useDynamicBatching = true, useGPUInstancing = true, useSRPBatcher = true;
+    
+        protected override RenderPipeline CreatePipeline()
+        {
+            return new CustomRenderPipeline(useDynamicBatching,useGPUInstancing,useSRPBatcher);
+        }
+        
     }
-    
-    
 }

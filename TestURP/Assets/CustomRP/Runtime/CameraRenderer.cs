@@ -20,11 +20,11 @@ namespace CustomRP.Runtime
         static  ShaderTagId unlitShaderTagId= new  ShaderTagId("SRPDefaultUnlit");
         
         
-        public void Render(ScriptableRenderContext context, Camera camera)
+        public void Render(ScriptableRenderContext context, Camera camera,bool useDynamicBatching, bool useGPUInstancing)
         {
             _context = context;
             _camera = camera;
-
+            
             if (!Cull())
             {
                 return;
@@ -34,12 +34,14 @@ namespace CustomRP.Runtime
             SetUp();
 
             //绘制天空
-            DrawVisibleGeometry();
+            DrawVisibleGeometry(useDynamicBatching,useGPUInstancing);
             //其他得绘制  必须单独通过commandbuffer 间接执行
 
+#if UNITY_EDITOR
             DrawUnsupportedShaders();
             DrawGizmos();
-            
+#endif
+
             
             //提交
             Submit();
@@ -56,7 +58,7 @@ namespace CustomRP.Runtime
         }
         
         
-        void DrawVisibleGeometry()
+        void DrawVisibleGeometry(bool useDynamicBatching,bool useGPUInstancing)
         {
             var sortingSettings= new  SortingSettings(_camera)
             {
@@ -64,7 +66,11 @@ namespace CustomRP.Runtime
             };
             
             
-            var  drawingSettings= new  DrawingSettings(unlitShaderTagId,sortingSettings);
+            var  drawingSettings= new  DrawingSettings(unlitShaderTagId,sortingSettings)
+            {
+                enableDynamicBatching = useDynamicBatching,
+                enableInstancing = useGPUInstancing
+            };
             var filteringSettings= new  FilteringSettings(RenderQueueRange.opaque);
             _context.DrawRenderers(_cullingResults,ref drawingSettings,ref filteringSettings);
 
@@ -86,7 +92,7 @@ namespace CustomRP.Runtime
 
         partial void DrawUnsupportedShaders();
 
-        partial void DrawGizmos();
+        //partial void DrawGizmos();
         
 
         void Submit()

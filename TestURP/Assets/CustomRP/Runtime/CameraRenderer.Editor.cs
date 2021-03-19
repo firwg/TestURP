@@ -11,6 +11,7 @@ namespace CustomRP.Runtime
 
 
 #if UNITY_EDITOR
+        
                 private static ShaderTagId[] legacyShaderTagIds =
                 {
                     new ShaderTagId("Always"),
@@ -22,7 +23,7 @@ namespace CustomRP.Runtime
                 };
         
                 private static Material errorMaterial;
-        
+
                 
                 partial void DrawUnsupportedShaders()
                 {
@@ -30,33 +31,36 @@ namespace CustomRP.Runtime
                     {
                         errorMaterial= new  Material(Shader.Find("Hidden/InternalErrorShader"));
                     }
-                    
+                            
                     var  drawingSettings= new  DrawingSettings(legacyShaderTagIds[0],new  SortingSettings(_camera))
                     {
                         overrideMaterial = errorMaterial
                     };
-                    
+                            
                     for (int i = 1; i < legacyShaderTagIds.Length; i++)
                     {
                         drawingSettings.SetShaderPassName(i,legacyShaderTagIds[i]);
                     }
-                    
+                            
                     var filteringSettings = FilteringSettings.defaultValue;
                     _context.DrawRenderers(_cullingResults,ref drawingSettings,ref  filteringSettings);
-                    
+                            
                 }
-                
-                
-                
-                partial void DrawGizmos()
+                        
+                        
+                        
+                void DrawGizmos()
                 {
+     
                     if (Handles.ShouldRenderGizmos())
-                    {
+                    {               
                         _context.DrawGizmos(_camera,GizmoSubset.PreImageEffects);
                         _context.DrawGizmos(_camera,GizmoSubset.PostImageEffects);
                     }
                 }
-                
+
+
+
 #endif
         
 

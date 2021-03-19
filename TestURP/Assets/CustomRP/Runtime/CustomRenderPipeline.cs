@@ -5,6 +5,15 @@ namespace CustomRP.Runtime
 {
     public class CustomRenderPipeline : RenderPipeline
     {
+        private bool useDynamicBatching, useGPUInstancing;
+
+        public CustomRenderPipeline(bool useDynamicBatching,bool useGPUInstancing,bool useSRPBatcher)
+        {
+            this.useDynamicBatching = useDynamicBatching;
+            this.useGPUInstancing = useGPUInstancing;
+            GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
+        }
+        
         
         CameraRenderer renderer= new CameraRenderer();
         
@@ -13,7 +22,7 @@ namespace CustomRP.Runtime
         {
             foreach (var VARIABLE in cameras)
             {
-                renderer.Render(context,VARIABLE);
+                renderer.Render(context,VARIABLE,useDynamicBatching,useGPUInstancing);
             }
         }
         
