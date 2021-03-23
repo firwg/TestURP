@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 using  UnityEditor;
+using Assets.CustomRP.Runtime;
 
 namespace CustomRP.Runtime
 {
@@ -11,13 +12,16 @@ namespace CustomRP.Runtime
 
         private Camera _camera;
 
+        Lighting lighting = new Lighting();
+
         private const string bufferName = "Render Camera";
         
         private CommandBuffer buffer = new CommandBuffer() {name = bufferName};
 
         private CullingResults _cullingResults;
-        
-        static  ShaderTagId unlitShaderTagId= new  ShaderTagId("SRPDefaultUnlit");
+
+        static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit"),
+            litShaderTagId = new ShaderTagId("CustomLit");
         
         
         public void Render(ScriptableRenderContext context, Camera camera,bool useDynamicBatching, bool useGPUInstancing)
@@ -32,6 +36,8 @@ namespace CustomRP.Runtime
             
             //设置
             SetUp();
+
+            lighting.Setup(context, _cullingResults);
 
             //绘制天空
             DrawVisibleGeometry(useDynamicBatching,useGPUInstancing);
@@ -71,6 +77,9 @@ namespace CustomRP.Runtime
                 enableDynamicBatching = useDynamicBatching,
                 enableInstancing = useGPUInstancing
             };
+
+            drawingSettings.SetShaderPassName(1, litShaderTagId);
+
             var filteringSettings= new  FilteringSettings(RenderQueueRange.opaque);
             _context.DrawRenderers(_cullingResults,ref drawingSettings,ref filteringSettings);
 
