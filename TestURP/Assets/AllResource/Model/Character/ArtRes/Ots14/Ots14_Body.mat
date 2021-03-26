@@ -111,6 +111,7 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _CellWidth: 0.46
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -119,10 +120,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _Gloss: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.505
     - _GlossinessSource: 0
     - _GlossyReflections: 1
+    - _HighLightWidth: 0.74
     - _METALNESS: 0
     - _Metallic: 0.2
     - _Mode: 0
@@ -148,9 +151,11 @@ Material:
     m_Colors:
     - _BASE_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CellColor: {r: 0.1509434, g: 0.14012104, b: 0.14012104, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HighLightColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.74509805}
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
