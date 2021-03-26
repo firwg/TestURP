@@ -72,6 +72,5 @@ float4 LitPassFragment(Varyings input):SV_TARGET{
 }
 
 
-
 #endif
 
