@@ -22,7 +22,6 @@ Light GetDirectionalLight(){
     light.color=_DirectionalLightColor;
     light.direction=_DirectionalLightDirection;
     return light;
-
 }
 
 

@@ -7,14 +7,22 @@ namespace CustomRP.Examples
     {
         private static int baseColorId = Shader.PropertyToID("_BaseColor");
         private static int cutoffId = Shader.PropertyToID("_Cutoff");
-
+        private static int metallicId = Shader.PropertyToID("_Metallic");
+        private static int smoothnessId = Shader.PropertyToID("_Smoothness");
+        
         private static MaterialPropertyBlock _block;
 
         
         [SerializeField]
         Color bseColor=Color.white;
-        [SerializeField]
+        [SerializeField,Range(0f,1f)]
         float cutoff = 0.5f;
+        
+        [SerializeField,Range(0f,1f)]
+        float  metallic= 0f;
+        [SerializeField,Range(0f,1f)]
+        float  smoothness= 0.5f;
+
 
         private void Awake()
         {
