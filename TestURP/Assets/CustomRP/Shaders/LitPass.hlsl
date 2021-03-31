@@ -67,15 +67,17 @@ float4 LitPassFragment(Varyings input):SV_TARGET{
     //base.rgb=normalize(input.normalWS);
 
     Surface surface;
+
     surface.normal=normalize(input.normalWS);
+    surface.viewDirection=normalize(_WorldSpaceCameraPos-input.positionWS);
     surface.color=base.rgb;
     surface.alpha=base.a;
     surface.metallic=UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Metallic);
     surface.smoothness=UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Smoothness);
 
+
+
     BRDF brdf=GetBRDF(surface);
-
-
 
     float3 color=GetLighting(surface,brdf);
 
