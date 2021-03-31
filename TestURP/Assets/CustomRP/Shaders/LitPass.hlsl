@@ -28,6 +28,7 @@ struct Attributes{
 
 struct Varyings{
     float4 positionCS:SV_POSITION;
+    float3 positionWS:VAR_POSITION;
     float3 normalWS:VAR_NORMAL;
     float2 baseUV:VAR_BASE_UV;
     UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -39,8 +40,8 @@ Varyings LitPassVertex(Attributes input){
     UNITY_SETUP_INSTANCE_ID(input);
     UNITY_TRANSFER_INSTANCE_ID(input,output);//转换 实例ID
 
-    float3 positionWS=TransformObjectToWorld(input.positionOS);
-    output.positionCS=TransformWorldToHClip(positionWS);
+    output.positionWS=TransformObjectToWorld(input.positionOS);
+    output.positionCS=TransformWorldToHClip(output.positionWS);
     output.normalWS=TransformObjectToWorldNormal(input.normalOS);
     float4 baseST=UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_BaseMap_ST);
 
@@ -50,7 +51,7 @@ Varyings LitPassVertex(Attributes input){
 
 }
 
-
+#define MIN_REFLECTIVITY 0.04
 float4 LitPassFragment(Varyings input):SV_TARGET{
     
     UNITY_SETUP_INSTANCE_ID(input);
@@ -74,9 +75,7 @@ float4 LitPassFragment(Varyings input):SV_TARGET{
 
     BRDF brdf=GetBRDF(surface);
 
-    float oneMinusReflectivity=OneMinusReflectivity(surface.metallic);
 
-    brdf.diffuse=surface.color*oneMinusReflectivity;
 
     float3 color=GetLighting(surface,brdf);
 
@@ -86,13 +85,10 @@ float4 LitPassFragment(Varyings input):SV_TARGET{
 
 
 
-#define MIN_REFLECTIVITY 0.04
 
 
-float OneMinusReflectivity(float metallic){
-    float range=1.0-MIN_REFLECTIVITY;
-    return range-metallic*range;
-}
+
+
 
 
 

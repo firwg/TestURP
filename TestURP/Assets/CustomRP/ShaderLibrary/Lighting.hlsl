@@ -8,7 +8,7 @@ float3 GetLighting(Surface surface,BRDF brdf){
   
   Light light=GetDirectionalLight();
 
-  return saturate(dot(surface.normal,light.direction))*light.color*brdf.diffuse;
+  return saturate(dot(surface.normal,light.direction))*DirectBRDF(surface,brdf,light);//light.color*brdf.diffuse;
 
   //  float3 f3=GetLighting2(surface,brdf,light);
   //  return f3;
